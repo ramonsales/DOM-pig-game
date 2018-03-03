@@ -11,6 +11,7 @@ var roundScore = 0;
 var activePlayer = 0;
 var gamePlaying = true;
 var lastDiceRoll = 0;
+var winningScore = 100;
 
 init();
 
@@ -29,6 +30,7 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         
         // 3. Player loses scores if he rolls two 6 in a row
         if (dice === 6 && lastDiceRoll === 6) {
+            console.log(dice);
             scores[activePlayer] = 0;
             document.getElementById('score-' + activePlayer).textContent = '0';
             nextPlayer();
@@ -58,7 +60,7 @@ document.querySelector(".btn-hold").addEventListener('click', function() {
         document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
         // Check if player won the game
-        if (scores[activePlayer] >= 100) {
+        if (scores[activePlayer] >= winningScore) {
             document.getElementById("name-" + activePlayer).textContent = 'Winner!';
             document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
             document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
@@ -70,6 +72,12 @@ document.querySelector(".btn-hold").addEventListener('click', function() {
             nextPlayer();
         }
     }
+});
+
+// Winning Score Listener
+document.getElementById('winning-score__input').addEventListener('blur', function() {
+    winningScore = document.getElementById('winning-score__input').value;
+    init();
 });
 
 function nextPlayer() {
@@ -88,21 +96,25 @@ document.querySelector(".btn-new").addEventListener('click', init);
 
 // Reset all game values
 function init() {
-    // Reset the last Winner
-    document.querySelector('.player-' + activePlayer + '-panel').classList.remove('winner');
-    document.getElementById("name-" + activePlayer).textContent = 'PLAYER ' + (activePlayer + 1);
     // Reset game values
     scores = [0, 0];
     roundScore = 0;
     activePlayer = 0;
     gamePlaying = true;
     lastDiceRoll = 0;
+    
     // Reset UI values
     document.querySelector('.dice').style.display = 'none';
     document.getElementById('score-0').textContent = '0';
     document.getElementById('score-1').textContent = '0';
     document.getElementById('current-0').textContent = '0';
     document.getElementById('current-1').textContent = '0';
+    document.getElementById("name-0").textContent = 'Player 1';
+    document.getElementById("name-1").textContent = 'Player 2';
+    document.querySelector('.player-0-panel').classList.remove('winner');
+    document.querySelector('.player-1-panel').classList.remove('winner');
+    document.querySelector('.player-0-panel').classList.remove('active');
+    document.querySelector('.player-1-panel').classList.remove('active');
     document.querySelector('.player-0-panel').classList.add('active');
 }
 
