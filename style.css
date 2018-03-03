@@ -141,6 +141,14 @@ i {
 .btn-roll { top: 403px;}
 .btn-hold { top: 467px;}
 
+.flipped {
+    transform: rotateY(360deg);
+}
+
+.dice-box {
+    transition: .4s;
+}
+
 .dice {
     position: absolute;
     left: 50%;
