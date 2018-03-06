@@ -22,12 +22,16 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         animateDice();
 
         // 1. Random number
-        var dice = Math.floor((Math.random() * (/*max*/6 - /*min*/1 + 1))) + /*min*/1;
+        var dice0 = Math.floor((Math.random() * (/*max*/6 - /*min*/1 + 1))) + /*min*/1;
+        var dice1 = Math.floor((Math.random() * (/*max*/6 - /*min*/1 + 1))) + /*min*/1;
+
         // 2. Display the result
-        var diceDOM = document.querySelector('.dice');
-        diceDOM.style.display = 'block';
-        diceDOM.src = 'dice-' + dice + '.png';
-        
+        document.getElementById('dice-0').style.display = 'block';
+        document.getElementById('dice-1').style.display = 'block';
+        document.getElementById('dice-0').src = 'dice-' + dice0 + '.png';
+        document.getElementById('dice-1').src = 'dice-' + dice1 + '.png';
+        /*
+        // CHALLENGE RULE #1
         // 3. Player loses scores if he rolls two 6 in a row
         if (dice === 6 && lastDiceRoll === 6) {
             console.log(dice);
@@ -35,13 +39,26 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
             document.getElementById('score-' + activePlayer).textContent = '0';
             nextPlayer();
         } 
+        
         // 4. Update the round score IF the rolled number was NOT a one
         else if (dice !== 1) {
             //Add score
             roundScore += dice;
             document.getElementById('current-' + activePlayer).textContent = roundScore;
-            lastDiceRoll = dice;
-            console.log(dice);
+            //lastDiceRoll = dice;
+            //console.log(dice);
+        }
+        else {
+            //Next player
+            nextPlayer();
+        }
+        */
+       if (dice0 !== 1 && dice1 !== 1) {
+            //Add score
+            roundScore += dice0 + dice1;
+            document.getElementById('current-' + activePlayer).textContent = roundScore;
+            //lastDiceRoll = dice;
+            //console.log(dice);
         }
         else {
             //Next player
@@ -66,6 +83,9 @@ document.querySelector(".btn-hold").addEventListener('click', function() {
             document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
             // Block buttons click
             gamePlaying = false;
+            //Hide dices
+            document.getElementById('dice-0').style.display = 'none';
+            document.getElementById('dice-1').style.display = 'none';
 
         } else {
             //Next Player
@@ -104,7 +124,9 @@ function init() {
     lastDiceRoll = 0;
     
     // Reset UI values
-    document.querySelector('.dice').style.display = 'none';
+    document.getElementById('dice-0').style.display = 'none';
+    document.getElementById('dice-1').style.display = 'none';
+
     document.getElementById('score-0').textContent = '0';
     document.getElementById('score-1').textContent = '0';
     document.getElementById('current-0').textContent = '0';
